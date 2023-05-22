@@ -75,7 +75,6 @@ HeaderBanner.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f2f2f2',
     borderRadius: 20,
     overflow: 'hidden',
     marginHorizontal: 20,
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+    
   },
   pagination: {
     position: 'absolute',

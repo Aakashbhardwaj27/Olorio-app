@@ -1,42 +1,30 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { Linking } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const offersData = [
-  {
-    id: 1,
-    title: 'Summer Sale',
-    image: 'https://picsum.photos/id/237/300/200',
-  },
-  {
-    id: 2,
-    title: 'Get 20% off',
-    image: 'https://picsum.photos/id/238/300/200',
-    },
-    {
-        id: 3,
-        title: 'Summer Sale',
-        image: 'https://picsum.photos/id/239/300/200',
-      },
-      {
-        id: 4,
-        title: 'Get 20% off',
-        image: 'https://picsum.photos/id/240/300/200',
-    },
-    {
-        id: 5,
-        title: 'Summer Sale',
-        image: 'https://picsum.photos/id/241/300/200',
-      },
-      {
-        id: 6,
-        title: 'Get 20% off',
-        image: 'https://picsum.photos/id/242/300/200',
-      },
-];
 
-const OfferArea = () => {
-    const handleProductClick = (product) => {
-        navigation.navigate('ProductDetails', { product });
+
+const OfferArea = ({ offersData ,suggestedProducts}) => {
+  const navigation = useNavigation();
+
+
+  const openInstagram = () => {
+    const username = 'the_olorio'; // Replace with the Instagram username or profile ID
+  
+    Linking.openURL(`instagram://user?username=${username}`)
+      .catch(() => {
+        Linking.openURL(`https://www.instagram.com/${username}`);
+      });
+  };
+  const openWhatsApp = () => {
+    const phoneNumber = '9548309781'; // Replace with the recipient's phone number
+  
+    Linking.openURL(`whatsapp://send?phone=${phoneNumber}`);
+  };
+    const handleProductClick = (productData) => {
+      navigation.navigate('ProductDetails', { productData,suggestedProducts });
       };
   return (
       <View style={styles.container}>
@@ -48,26 +36,26 @@ const OfferArea = () => {
           keyExtractor={(item) => item.id.toString()}
                   renderItem={({ item }) => (
               
-            <View style={styles.offerContainer}>
-              <Image source={{ uri: item.image }} style={styles.offerImage} />
-              <Text style={styles.offerTitle}>{item.title}</Text>
-            </View>
+            <TouchableOpacity style={styles.offerContainer} onPress={() => handleProductClick(item)}>
+              <Image source={{ uri: item.image_url }} style={styles.offerImage} />
+              <Text style={styles.offerTitle}>{item.name.slice(0,10)}...</Text>
+            </TouchableOpacity>
           )}
         />
       </View>
       <View style={styles.separator} />
-      <View style={styles.bannerContainer}>
+      <TouchableOpacity style={styles.bannerContainer} onPress={openInstagram}>
         <Image
-          source={{ uri: 'https://picsum.photos/id/239/600/200' }}
+          source={{ uri: 'https://commerce.mhiservers2.com/images/instagram.png' }}
           style={styles.bannerImage}
         />
-          </View>
-          <View style={styles.bannerContainer}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.bannerContainer} onPress={openWhatsApp}>
         <Image
-          source={{ uri: 'https://picsum.photos/id/238/600/200' }}
+          source={{ uri: 'https://commerce.mhiservers2.com/images/watsapp.png' }}
           style={styles.bannerImage}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -76,15 +64,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     marginHorizontal: 10,
-    marginTop: 20,
+    marginTop: 10,
     borderRadius: 5,
     overflow: 'hidden',
-  },  title: {
+  },
+  title: {
     fontSize: 20,
     fontWeight: 'bold',
 
     
-    color:'tomato'
+    color:'#D1B000'
   },
   offersContainer: {
     paddingHorizontal: 10,
@@ -93,6 +82,10 @@ const styles = StyleSheet.create({
   offerContainer: {
     marginRight: 10,
     alignItems: 'center',
+    borderColor: '#D1B000',
+    borderWidth: 0.25,
+    padding: 5,
+    borderRadius:5
   },
   offerImage: {
     width: 80,
@@ -110,8 +103,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   bannerContainer: {
-    paddingHorizontal: 10,
-    paddingVertical: 15,
+    paddingHorizontal: 0,
+    paddingVertical: 5,
   },
   bannerImage: {
     width: '100%',

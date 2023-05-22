@@ -1,17 +1,21 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import SignupScreen from './SignupScreen';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigation = useNavigation();
+  const [loginForm,setLoginForm]=useState(true)
   const handleLogin = () => {
     // Implement your login logic here
     // For this example, we'll just navigate to the home screen
-    navigation.navigate('Home');
+    // navigation.navigate('Home');
   };
 
   return (
+    loginForm?
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <TextInput
@@ -30,16 +34,17 @@ export default function LoginScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.link} onPress={() => navigation.navigate('Signup')}>
+      <TouchableOpacity style={styles.link} onPress={() => setLoginForm(false)}>
         <Text>Don't have an account? Sign up here</Text>
       </TouchableOpacity>
-    </View>
+    </View>:<SignupScreen handleSwitch={()=>{setLoginForm(true)}} />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width:'100%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -58,9 +63,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#D1B000',
     padding: 10,
     borderRadius: 4,
+    width:'80%'
   },
   buttonText: {
     color: '#fff',

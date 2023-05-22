@@ -3,13 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 const CartScreen = ({ navigation }) => {
-  const [cartItems, setCartItems] = useState([
-    { id: '1', name: 'Product 1', price: 9.99, quantity: 2 },
-    { id: '2', name: 'Product 2', price: 19.99, quantity: 1 },
-      { id: '3', name: 'Product 3', price: 14.99, quantity: 3 },
-      { id: '4', name: 'Product 4', price: 14.99, quantity: 3 },
-      { id: '5', name: 'Product 5', price: 14.99, quantity: 3 },
-  ]);
+  const [cartItems, setCartItems] = useState([  ]);
 
   const updateQuantity = (id, quantity) => {
     const newCartItems = cartItems.map(item => {
@@ -78,7 +72,10 @@ const CartScreen = ({ navigation }) => {
           </TouchableOpacity>
         </>
       ) : (
-        <Text style={styles.emptyCart}>Your cart is empty</Text>
+          <View style={styles.container}>
+            <Image source={require('./assets/emptyCart.png')} style={{width:300,height:300}} />
+            <Text style={styles.emptyCart}>Nothing in my cart</Text>
+            </View>
       )}
     </View>
   );
@@ -87,7 +84,10 @@ const CartScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+    backgroundColor: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+      alignItems:'center'
     },
     itemContainer: {
       flexDirection: 'row',
@@ -98,7 +98,8 @@ const styles = StyleSheet.create({
       padding: 10,
       borderRadius: 5,
       backgroundColor: '#f2f2f2',
-    },
+  },
+  emptyCart:{fontSize:24,fontWeight:'bold',color:'red'},
     itemName: {
       fontSize: 16,
       fontWeight: 'bold',

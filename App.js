@@ -12,6 +12,9 @@ import CartScreen from './CartScreen';
 import ProfileScreen from './ProfileScreen';
 import OrderScreen from './OrderScreen';
 import ProductDetailScreen from './ProductDetailsScreen';
+import ExplorePage from './ExplorePage';
+import VideoLibraryScreen from './FeelsLibrary';
+import VideoRecordingScreen from './RecordVideo';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,7 +27,8 @@ function HomeStack() {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="ProductDetails"  options={{headerShown:false}} component={ProductDetailScreen} />
+      <Stack.Screen name="ProductDetails" options={{ headerShown: false }} component={ProductDetailScreen} />
+      <Stack.Screen name="Create"  options={{headerShown:false}} component={VideoRecordingScreen} />
     </Stack.Navigator>
   );
 }
@@ -46,9 +50,12 @@ export default function App() {
               case 'Profile':
                 iconName = 'person';
                 break;
-              case 'Order':
-                iconName = 'history';
+              case 'Explore':
+                iconName = 'search';
                 break;
+                case 'Feels':
+                  iconName = 'video-library';
+                  break;
               default:
                 iconName = 'home';
                 break;
@@ -57,13 +64,15 @@ export default function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#D1B000',
           inactiveTintColor: 'gray',
         }}>
         <Tab.Screen name="Home" options={{headerShown:false }} component={HomeStack} />
-        <Tab.Screen name="Cart" component={CartScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
-        <Tab.Screen name="Order" component={OrderScreen} />
+
+        <Tab.Screen name="Explore" options={{headerTitleAlign:'center',headerTitleStyle:{fontSize:18}}} component={ExplorePage} />
+        <Tab.Screen name="Feels" component={VideoLibraryScreen} />
+        <Tab.Screen name="Cart" options={{headerTitle:'My Cart' }} component={CartScreen} />
+        <Tab.Screen name="Profile" options={{headerTitle:'Account' }}  component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

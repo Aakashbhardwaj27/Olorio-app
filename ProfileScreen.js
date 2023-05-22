@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
+import LoginScreen from './LoginScreen';
 
 
 const ProfileScreen = () => {
-   
-    const isAuthenticated = true;
+   const [isAuthenticated,setIsAuthenticated]=useState(false)
+  
     const user = {
         name: 'John Doe',
         email: 'johndoe@example.com',
@@ -16,12 +17,12 @@ const ProfileScreen = () => {
           state: 'CA',
           zip: '12345',
         },
-        profilePicture: 'https://randomuser.me/api/portraits/men/1.jpg',
+        profilePicture: 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png',
         loggedIn: true,
       };
     const logout=""
   const handleLogout = () => {
-   console.log('logout')
+ setIsAuthenticated(false)
   };
 
   return (
@@ -51,15 +52,7 @@ const ProfileScreen = () => {
           </View>
         </View>
       ) : (
-        <View style={styles.loginSection}>
-          <Text style={styles.loginText}>You are not logged in.</Text>
-          <TouchableOpacity style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Log in</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.signupButton}>
-            <Text style={styles.signupButtonText}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+        <LoginScreen  />
       )}
     </View>
   );

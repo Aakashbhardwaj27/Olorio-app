@@ -3,52 +3,17 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 const ProductDetails = ({ navigation, route }) => {
-  const { product } = route.params;
+  const { productData,suggestedProducts } = route.params;
   const [showFullDescription, setShowFullDescription] = useState(false);
   const MAX_DESCRIPTION_LENGTH = 300;
+const [product,setProduct]=useState(productData)
 
-  const suggestedProducts = [
-    {
-        id: 1,
-        name: 'Summer Sale',
-          image: 'https://picsum.photos/id/237/300/200',
-        price:100
-      },
-      {
-        id: 2,
-        name: 'Get 20% off',
-          image: 'https://picsum.photos/id/238/300/200',
-          price:100
-        },
-        {
-            id: 3,
-            name: 'Summer Sale',
-            image: 'https://picsum.photos/id/239/300/200',
-            price:100
-          },
-          {
-            id: 4,
-            namwe: 'Get 20% off',
-              image: 'https://picsum.photos/id/240/300/200',
-              price:100
-        },
-        {
-            id: 5,
-            name: 'Summer Sale',
-            image: 'https://picsum.photos/id/241/300/200',
-            price:100
-          },
-          {
-            id: 6,
-            name: 'Get 20% off',
-              image: 'https://picsum.photos/id/242/300/200',
-              price:100
-          },
-  ];
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
+
+
 
     return (
       
@@ -56,12 +21,12 @@ const ProductDetails = ({ navigation, route }) => {
            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
            <Ionicons name="ios-arrow-back" size={24} color="black" />
       </TouchableOpacity>
-      <Image source={{ uri: product.image }} style={styles.image} />
+      <Image source={{ uri: product.image_url }} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{product.name}</Text>
         <View style={styles.priceContainer}>
-          <Text style={styles.priceCurrency}>$</Text>
-          <Text style={styles.price}>{product.price}</Text>
+          <Text style={styles.priceCurrency}>₹</Text>
+          <Text style={styles.price}>{product.offerPrice?.replace('from','')}</Text>
         </View>
         <TouchableOpacity style={styles.addToCartButton}>
           <Text style={styles.addToCartButtonText}>Add to Cart</Text>
@@ -71,7 +36,7 @@ const ProductDetails = ({ navigation, route }) => {
             ? `${product.description.substring(0, MAX_DESCRIPTION_LENGTH)}...`
             : product.description}
         </Text>
-        {product.description.length > MAX_DESCRIPTION_LENGTH && (
+        {product.description.length < MAX_DESCRIPTION_LENGTH && (
           <TouchableOpacity onPress={toggleDescription} style={styles.readMoreButton}>
             <Text style={styles.readMoreButtonText}>
               {showFullDescription ? 'Read Less' : 'Read More'}
@@ -83,10 +48,10 @@ const ProductDetails = ({ navigation, route }) => {
         <Text style={styles.suggestedProductsTitle}>Suggested Products</Text>
         <ScrollView horizontal={true}>
           {suggestedProducts.map((product) => (
-            <TouchableOpacity key={product.id} style={styles.suggestedProductItem}>
-              <Image source={{ uri: product.image }} style={styles.suggestedProductImage} />
+            <TouchableOpacity key={product.id} style={styles.suggestedProductItem} onPress={()=>setProduct(product)} >
+              <Image source={{ uri: product.image_url }} style={styles.suggestedProductImage} />
               <Text style={styles.suggestedProductName}>{product.name}</Text>
-              <Text style={styles.suggestedProductPrice}>${product.price.toFixed(2)}</Text>
+              <Text style={styles.suggestedProductPrice}>₹{product.offerPrice}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -102,6 +67,8 @@ const styles = StyleSheet.create({
     image: {
       width: '100%',
       height: 300,
+      backgroundColor: '#FFED8A',
+      marginTop:35
     },
     infoContainer: {
       backgroundColor: '#fff',
@@ -121,12 +88,12 @@ const styles = StyleSheet.create({
     priceCurrency: {
       fontSize: 16,
       fontWeight: 'bold',
-      color: 'tomato',
+      color: '#D1B000',
     },
     price: {
       fontSize: 28,
       fontWeight: 'bold',
-      color: 'tomato',
+      color: '#D1B000',
       marginLeft: 5,
     },
     description: {
@@ -141,7 +108,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     addToCartButton: {
-      backgroundColor: 'tomato',
+      backgroundColor: '#D1B000',
       borderRadius: 10,
       padding: 10,
       alignItems: 'center',
@@ -163,7 +130,21 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     suggestedProductItem: {
-      marginRight: 20,
+      width: 170,
+      height:250,
+  marginBottom: 16,
+  backgroundColor: '#FFFFFF',
+  padding: 16,
+  borderRadius: 8,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 2,
+      elevation: 2,
+      margin: 1,
+      overflow: 'hidden',
+      paddingVertical: 5,
+      marginHorizontal:5
     },
     suggestedProductImage: {
       width: 150,
@@ -208,6 +189,9 @@ const styles = StyleSheet.create({
         color: '#fff',
       },
       
+  readMoreButtonText: {
+        color:'red'
+      }
       
   });
 

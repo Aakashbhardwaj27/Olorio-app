@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HungryHeads",
-    "slug": "HungryHeads",
+    "name": "Olorio",
+    "slug": "Olorio",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,9 +15,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "in.olorio.app"
     },
     "android": {
+      "package": "in.olorio.olorio",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -25,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a2a030e7-c1e2-498b-ab01-6f39048f5b52"
+      }
     }
   }
 }

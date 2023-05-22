@@ -1,11 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-export default function SignupScreen({ navigation }) {
+export default function SignupScreen({handleSwitch}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigation = useNavigation();
   const handleSignup = () => {
     // Implement your signup logic here
     // For this example, we'll just navigate to the home screen
@@ -37,7 +38,7 @@ export default function SignupScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.link} onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity style={styles.link} onPress={() => handleSwitch()}>
         <Text>Already have an account? Login here</Text>
       </TouchableOpacity>
     </View>
@@ -47,6 +48,7 @@ export default function SignupScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width:'100%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -65,9 +67,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#D1B000',
     padding: 10,
     borderRadius: 4,
+    width:'80%'
   },
   buttonText: {
     color: '#fff',
